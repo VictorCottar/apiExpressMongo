@@ -1,8 +1,13 @@
 import express from 'express';
-import { NUMBER } from 'sequelize';
-
+import dbConnect from './database/dbConnect.js';
 const app = express();
+const connection = await dbConnect();
+
 app.use(express.json());
+
+connection.on('error', (erro) => console.error('Erro ao conectar ao banco de dados', erro));
+connection.once('open', () => console.log('Conexão realizada com sucesso'));
+
 
 const livros = [
 {    id: 1,
